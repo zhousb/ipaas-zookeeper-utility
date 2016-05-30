@@ -1,6 +1,7 @@
 package com.zsb.model;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -46,14 +47,14 @@ public class ZkClient {
 		CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory
 				.builder().connectString(this.zkAddr)
 				.connectionTimeoutMs(this.timeOut)
-				.retryPolicy(new RetryNTimes(2147483647, 10));
+				.retryPolicy(new RetryNTimes(5, 10));
 		if ((!StringUtils.isBlank(this.authSchema))
 				&& (!StringUtils.isBlank(this.authInfo))) {
 			builder.authorization(this.authSchema, this.authInfo.getBytes());
 		}
 		this.client = builder.build();
 		this.client.start();
-		this.client.blockUntilConnected();
+		this.client.blockUntilConnected(5,TimeUnit.SECONDS);
 	}
 
 	public String getNodeData(String nodePath, boolean watch) throws Exception {
