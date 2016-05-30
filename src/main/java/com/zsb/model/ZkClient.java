@@ -201,9 +201,10 @@ public class ZkClient {
 
 	public ZkClient addAuth(String authSchema, String authInfo)
 			throws Exception {
-		this.client.getZookeeperClient().getZooKeeper()
-				.addAuthInfo("digest", authInfo.getBytes());
-
+		synchronized (ZkClient.class) {
+			this.client.getZookeeperClient().getZooKeeper()
+					.addAuthInfo(authSchema, authInfo.getBytes());
+		}
 		return this;
 	}
 }
