@@ -10,6 +10,8 @@ import org.apache.curator.framework.api.ACLBackgroundPathAndBytesable;
 import org.apache.curator.framework.api.BackgroundPathAndBytesable;
 import org.apache.curator.framework.api.BackgroundPathable;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
+import org.apache.curator.framework.recipes.locks.InterProcessLock;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.Watcher;
@@ -54,7 +56,7 @@ public class ZkClient {
 		}
 		this.client = builder.build();
 		this.client.start();
-		this.client.blockUntilConnected(5,TimeUnit.SECONDS);
+		this.client.blockUntilConnected(5, TimeUnit.SECONDS);
 	}
 
 	public String getNodeData(String nodePath, boolean watch) throws Exception {
@@ -207,5 +209,9 @@ public class ZkClient {
 					.addAuthInfo(authSchema, authInfo.getBytes());
 		}
 		return this;
+	}
+
+	public InterProcessLock getInterProcessLock(String lockPath) {
+		return new InterProcessMutex(this.client, lockPath);
 	}
 }
