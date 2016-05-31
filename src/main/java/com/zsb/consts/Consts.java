@@ -25,5 +25,22 @@ public class Consts {
 	 */
 	public static final String ACL_DIGEST = "digest";
 	public static final String ACL_WORLD = "world";
-
+	
+	/**
+	 * ipaas 根节点
+	 */
+	public static final String IPAAS_ROOT = "/ipaashome";
+	
+	/**
+	 * 配置节点名称
+	 */
+	public static final String USER_CONF = "configure";
+	
+	/**
+	 * 锁节点
+	 */
+	public static final String USER_LOCK = "lock";
+	
+	
+	
 }

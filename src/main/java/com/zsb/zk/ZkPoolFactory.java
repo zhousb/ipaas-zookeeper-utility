@@ -33,6 +33,34 @@ public class ZkPoolFactory {
 		return zkPool;
 	}
 
+	public static ZkPool getZkPool(String zkAddress) throws ZkException{
+		validateParam(zkAddress);
+		if(zkPool.exist(zkAddress, "")){
+			return zkPool;
+		}
+		ZkClient client = null;
+		try {
+			client = new ZkClient(zkAddress, 2000);
+		} catch (Exception e) {
+			throw new ZkException("获取zkPool 失败",e);
+		}
+		zkPool.addZkClient(zkAddress, "", client);
+		return zkPool;
+	}
+	public static ZkPool getZkPool(String zkAddress,int timeOut) throws ZkException{
+		validateParam(zkAddress);
+		if(zkPool.exist(zkAddress, "")){
+			return zkPool;
+		}
+		ZkClient client = null;
+		try {
+			client = new ZkClient(zkAddress, timeOut);
+		} catch (Exception e) {
+			throw new ZkException("获取zkPool 失败",e);
+		}
+		zkPool.addZkClient(zkAddress, "", client);
+		return zkPool;
+	}
 	public static ZkPool getZkPool(String zkAddress, String zkUser,
 			String zkPasswd, String serviceId, int timeOut)
 			throws ZkException {
@@ -52,6 +80,17 @@ public class ZkPoolFactory {
 		return zkPool;
 	}
 
+	
+	private static void validateParam(String ...params) throws ZkException{
+		if(null != params && params.length >0){
+			for(int i=0;i<params.length;i++){
+				if(StringUtils.isEmpty(params[i])){
+					throw new ZkException("参数不合法");
+				}
+			}
+		}
+	}
+	
 	private static void validateParam(String zkAddress, String zkUser,
 			String zkPasswd) throws ZkException {
 		if(StringUtils.isBlank(zkAddress)||StringUtils.isEmpty(zkUser)||StringUtils.isEmpty(zkPasswd)){
@@ -92,6 +131,7 @@ public class ZkPoolFactory {
 				zkPasswd = authInfo[1];
 			}
 		}
+		
 		return getZkPool(zkAddress, zkUser, zkPasswd, 2000);
 	}
 }
