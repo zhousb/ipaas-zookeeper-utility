@@ -210,7 +210,11 @@ public class ZkClient {
 		}
 		return this;
 	}
-
+	/**
+	 * zk客户端互斥锁 (在同一个jvm下有效)
+	 * @param lockPath
+	 * @return
+	 */
 	public InterProcessLock getInterProcessLock(String lockPath) {
 		return new InterProcessMutex(this.client, lockPath);
 	}

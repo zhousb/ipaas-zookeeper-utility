@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.curator.framework.recipes.locks.InterProcessLock;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
@@ -70,11 +71,16 @@ public class Test {
 		
 		ZkPool po2 = ZkPoolFactory.getZkPool("node01:2181", "admin", "admin123");
 		ZkClient cl2 = po2.getZkClient("node01:2181", "admin");
+		InterProcessLock lock = cl2.getInterProcessLock("/bmcConfCenter/test1");
+		lock.acquire();
 		System.out.println(cl2.getNodeData("/bmcConfCenter/test1"));
+		Thread.sleep(5000);
+		lock.release();
+		System.out.println("relase client lock");
 		//ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 10000, new DefaultWatcher());  
 		//zk.create("/test", new byte[0], acls, CreateMode.PERSISTENT);  
-		ZkPool po1 = ZkPoolFactory.getZkPool("node01:2181", "test", "test");
-		ZkClient cl1 = po1.getZkClient("node01:2181", "test");
+		ZkPool po1 = ZkPoolFactory.getZkPool("node01:2181", "admin", "admin123");
+		ZkClient cl1 = po1.getZkClient("node01:2181", "admin");
 		System.out.println(cl1.getNodeData("/bmcConfCenter/test1"));
 	}
 }
