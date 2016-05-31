@@ -1,8 +1,6 @@
 package com.zsb.event;
 
 import org.apache.zookeeper.WatchedEvent;
-import org.jboss.netty.handler.codec.http.multipart.HttpPostRequestEncoder.EncoderMode;
-
 import com.zsb.event.ZkWatcher.Event.EventType;
 import com.zsb.event.ZkWatcher.Event.KeeperState;
 
