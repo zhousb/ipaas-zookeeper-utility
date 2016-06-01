@@ -12,6 +12,7 @@ import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 
 import com.google.gson.Gson;
 import com.zsb.exception.ZkException;
+import com.zsb.lock.DistributedLock;
 import com.zsb.model.ZkClient;
 import com.zsb.zk.ZkPool;
 import com.zsb.zk.ZkPoolFactory;
@@ -22,7 +23,8 @@ public class Test {
 	public static void main(String args[]){
 		try {
 			//testZkClient();
-			testZkPoolFc();
+			//testZkPoolFc();
+			testLock();
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -82,5 +84,19 @@ public class Test {
 		ZkPool po1 = ZkPoolFactory.getZkPool("node01:2181", "admin", "admin123");
 		ZkClient cl1 = po1.getZkClient("node01:2181", "admin");
 		System.out.println(cl1.getNodeData("/bmcConfCenter/test1"));
+		
+		
+		
+	}
+	
+	public static void testLock(){
+		DistributedLock lock = new DistributedLock("node01:2181", "test", "test123", "serviceid", "bis");
+		lock.lock();
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

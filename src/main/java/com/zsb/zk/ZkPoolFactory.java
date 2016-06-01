@@ -131,7 +131,9 @@ public class ZkPoolFactory {
 				zkPasswd = authInfo[1];
 			}
 		}
-		
+		else {
+			throw new ZkException("参数不正确");
+		}
 		return getZkPool(zkAddress, zkUser, zkPasswd, 2000);
 	}
 }
