@@ -156,8 +156,7 @@ public class ZkClient {
 
 	public boolean exists(String path, Watcher watcher) throws Exception {
 		if (null != watcher) {
-			return null != ((BackgroundPathable<?>) this.client.checkExists()
-					.watched()).forPath(path);
+			return null != ((BackgroundPathable<?>) this.client.checkExists().usingWatcher(watcher)).forPath(path);
 		}
 		return null != this.client.checkExists().forPath(path);
 	}
@@ -211,7 +210,6 @@ public class ZkClient {
 		return this;
 	}
 	/**
-	 * zk客户端互斥锁 (在同一个jvm下有效)
 	 * @param lockPath
 	 * @return
 	 */

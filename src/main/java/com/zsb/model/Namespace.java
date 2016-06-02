@@ -6,7 +6,12 @@ public class Namespace {
 	private String confHome;
 	private String lockHome;
 	private String subLockHome;
+	private String lockPre;
 	
+	
+	public String getLockNodePath(){
+		return subLockHome+"/"+lockPre;
+	}
 	
 	public String getSubLockHome() {
 		return subLockHome;
@@ -38,6 +43,14 @@ public class Namespace {
 
 	public void setLockHome(String lockHome) {
 		this.lockHome = lockHome;
+	}
+
+	public String getLockPre() {
+		return lockPre;
+	}
+
+	public void setLockPre(String lockPre) {
+		this.lockPre = lockPre;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.zsb.utils;
 
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,7 +26,7 @@ public class NamespaceUtils {
 
 	public static synchronized Namespace getNamespace(String userName,
 			String pwd, String serviceId,String bisCode) {
-		String key = calculateKey(userName, pwd, serviceId);
+		String key = calculateKey(userName, pwd, serviceId,bisCode);
 		if (map.containsKey(key)) {
 			return map.get(key);
 		}
@@ -39,8 +40,8 @@ public class NamespaceUtils {
 	}
 
 	private static String calculateKey(String userName, String pwd,
-			String serviceId) {
-		return userName + pwd + serviceId;
+			String serviceId,String bisCode) {
+		return userName + pwd + serviceId + bisCode;
 	}
 
 	public static String getIpassHome() {
@@ -74,12 +75,12 @@ public class NamespaceUtils {
 
 	private static String getIpaasSubLockHome(String userName, String pwd,
 			String serviceId,String bisCode){
-		String bisCodeM = null;
+		//String bisCodeM = null;
 		try {
-			bisCodeM = CryptoUtils.getMD5String(bisCode);
+			//bisCodeM = CryptoUtils.getMD5String(bisCode);
 		} catch (Exception e) {
 			LOG.error("",e);
 		}
-		return getIpaasLockHome(userName, pwd,serviceId) + "/" + bisCodeM; 
+		return getIpaasLockHome(userName, pwd,serviceId) + "/" + bisCode; 
 	}
 }

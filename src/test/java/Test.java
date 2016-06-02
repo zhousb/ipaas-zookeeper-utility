@@ -45,6 +45,7 @@ public class Test {
 			client.createNode("/bmcConfCenter/test","datass");
 			System.out.println("end!!!!!");
 			System.out.println(f);
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -89,11 +90,48 @@ public class Test {
 		
 	}
 	
-	public static void testLock(){
-		DistributedLock lock = new DistributedLock("node01:2181", "test", "test123", "serviceid", "bis");
+	public static void testLock() throws ZkException{
+		DistributedLock lock = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis");
 		lock.lock();
+		
+		DistributedLock lock2 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis");
+		lock2.lock();
+		/***
+		DistributedLock lock3 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis");
+		lock3.lock();
+		
+		DistributedLock lock11 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis111");
+		lock11.lock();
+		
+		DistributedLock lock22 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis111");
+		lock22.lock();
+		
+		DistributedLock lock33 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis111");
+		lock33.lock();
+		
+		****/
+		
+		
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(3000);
+			
+			try {
+				lock.releaseLock();
+				
+				lock2.releaseLock();
+				/**
+				lock3.releaseLock();
+				
+				lock11.releaseLock();
+				lock22.releaseLock();
+				lock33.releaseLock();
+				***/
+				Thread.sleep(30000);
+			} catch (ZkException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
