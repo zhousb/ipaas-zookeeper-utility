@@ -13,6 +13,12 @@ public class ZkPool {
 
 	private static ConcurrentHashMap<String, ZkClient> clients = new ConcurrentHashMap<String, ZkClient>();
 
+	
+	
+	public ZkClient getZkClient(String zkAddr){
+		return (ZkClient) clients.get(appendKey(zkAddr, ""));
+	}
+	
 	public ZkClient getZkClient(String zkAddr, String zkUserName)
 			throws Exception {
 		return (ZkClient) clients.get(appendKey(zkAddr, zkUserName));

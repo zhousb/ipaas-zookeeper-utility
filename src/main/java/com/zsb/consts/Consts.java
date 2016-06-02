@@ -31,6 +31,12 @@ public class Consts {
 	 */
 	public static final String IPAAS_ROOT = "/ipaashome";
 	
+	
+	/**
+	 * namespace
+	 */
+	public static final String IPAAS_NS = "ipaashome";
+	
 	/**
 	 * 配置节点名称
 	 */

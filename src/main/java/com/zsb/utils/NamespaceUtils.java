@@ -53,8 +53,7 @@ public class NamespaceUtils {
 
 		String home = null;
 		try {
-			home = getIpassHome() + "/"
-					+ CryptoUtils.getMD5String(userName + pwd + serviceId);
+			home ="/"+ CryptoUtils.getMD5String(userName + pwd + serviceId);
 		} catch (Exception e) {
 			LOG.error("", e);
 		}
