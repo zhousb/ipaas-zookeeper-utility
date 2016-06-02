@@ -32,6 +32,7 @@ public class NamespaceUtils {
 		Namespace ns = new Namespace();
 		ns.setUserHome(getIpaasUserHome(userName, pwd, serviceId));
 		ns.setConfHome(getIpaasUserConfHome(userName, pwd, serviceId));
+		//ns.setSubConfHome(getIpaasSubConfHome(userName, pwd, serviceId, bisCode));
 		ns.setLockHome(getIpaasLockHome(userName, pwd, serviceId));
 		ns.setSubLockHome(getIpaasSubLockHome(userName, pwd, serviceId, bisCode));
 		map.put(key, ns);
@@ -81,4 +82,16 @@ public class NamespaceUtils {
 		}
 		return getIpaasLockHome(userName, pwd,serviceId) + "/" + bisCode; 
 	}
+	
+	private static String getIpaasSubConfHome(String userName, String pwd,
+			String serviceId,String bisCode){
+		//String bisCodeM = null;
+		try {
+			//bisCodeM = CryptoUtils.getMD5String(bisCode);
+		} catch (Exception e) {
+			LOG.error("",e);
+		}
+		return getIpaasUserConfHome(userName, pwd,serviceId) + "/" + bisCode; 
+	}
+	
 }

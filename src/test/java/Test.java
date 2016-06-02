@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.curator.framework.recipes.locks.InterProcessLock;
 import org.apache.log4j.Logger;
@@ -13,10 +15,14 @@ import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 
 import com.google.gson.Gson;
+import com.zsb.config.ConfInZookeeper;
 import com.zsb.consts.Consts;
 import com.zsb.exception.ZkException;
 import com.zsb.lock.DistributedLock;
 import com.zsb.model.ZkClient;
+import com.zsb.model.ZkParam;
+import com.zsb.utils.ConfigureUtil;
+import com.zsb.utils.DistributedLockUtil;
 import com.zsb.utils.ZookeeperUtils;
 import com.zsb.zk.ZkPool;
 import com.zsb.zk.ZkPoolFactory;
@@ -30,7 +36,8 @@ public class Test {
 			//testZkPoolFc();
 			//testLock();
 			//testWatcher();
-			testAcl();
+			//testAcl();
+			testConf();
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -109,6 +116,8 @@ public class Test {
 	
 	public static void testLock() throws ZkException{
 		DistributedLock lock = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis");
+		lock.lock();
+		System.out.println("222222");
 		lock.lock();
 		System.out.println("3333333");
 		DistributedLock lock2 = new DistributedLock("node01:2181", "test1", "test123", "serviceid", "bis");
@@ -196,4 +205,24 @@ public class Test {
 		client.deleteNode("/test5");
 	}
 	
+	
+	public static void testConf() throws ZkException{
+		ZkParam param = new ZkParam();
+		param.setZkAddr("node01:2181");
+		param.setZkUser("test6");
+		param.setZkPwd("pwd");
+		param.setServiceId("serviceid");
+		param.setBisCode("bis");
+		
+		DistributedLock lock = DistributedLockUtil.getDistributedLock(param);
+		
+		lock.lock();
+		
+		ConfInZookeeper conf = ConfigureUtil.getConfInZookeeper(param);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("key", "value");
+		conf.setConf(map);
+		lock.releaseLock();
+		System.out.println(conf.getConf());
+	}
 }

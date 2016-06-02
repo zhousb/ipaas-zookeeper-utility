@@ -4,6 +4,7 @@ public class Namespace {
 
 	private String userHome;
 	private String confHome;
+	//private String subConfHome;
 	private String lockHome;
 	private String subLockHome;
 	private String lockPre;
@@ -52,5 +53,13 @@ public class Namespace {
 	public void setLockPre(String lockPre) {
 		this.lockPre = lockPre;
 	}
+	/**
+	public String getSubConfHome() {
+		return subConfHome;
+	}
 
+	public void setSubConfHome(String subConfHome) {
+		this.subConfHome = subConfHome;
+	}
+	 **/
 }
