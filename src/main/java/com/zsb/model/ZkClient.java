@@ -18,6 +18,8 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 
+import com.zsb.consts.Consts;
+
 /**
  * Date: 2016年5月28日 <br>
  * 
@@ -47,7 +49,7 @@ public class ZkClient {
 			}
 		}
 		CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory
-				.builder().connectString(this.zkAddr)
+				.builder().connectString(this.zkAddr).namespace(Consts.IPAAS_NS)
 				.connectionTimeoutMs(this.timeOut)
 				.retryPolicy(new RetryNTimes(5, 10));
 		if ((!StringUtils.isBlank(this.authSchema))
@@ -210,6 +212,7 @@ public class ZkClient {
 		return this;
 	}
 	/**
+	 * 分布式锁
 	 * @param lockPath
 	 * @return
 	 */
