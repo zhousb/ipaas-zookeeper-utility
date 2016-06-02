@@ -83,15 +83,6 @@ public class NamespaceUtils {
 		return getIpaasLockHome(userName, pwd,serviceId) + "/" + bisCode; 
 	}
 	
-	private static String getIpaasSubConfHome(String userName, String pwd,
-			String serviceId,String bisCode){
-		//String bisCodeM = null;
-		try {
-			//bisCodeM = CryptoUtils.getMD5String(bisCode);
-		} catch (Exception e) {
-			LOG.error("",e);
-		}
-		return getIpaasUserConfHome(userName, pwd,serviceId) + "/" + bisCode; 
-	}
+	
 	
 }
