@@ -13,6 +13,7 @@ import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 
 import com.google.gson.Gson;
+import com.zsb.consts.Consts;
 import com.zsb.exception.ZkException;
 import com.zsb.lock.DistributedLock;
 import com.zsb.model.ZkClient;
@@ -27,8 +28,9 @@ public class Test {
 		try {
 			//testZkClient();
 			//testZkPoolFc();
-			testLock();
+			//testLock();
 			//testWatcher();
+			testAcl();
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -183,5 +185,15 @@ public class Test {
 		
 	}
 	
+	public static void testAcl() throws Exception{
+		List<ACL> acls = ZookeeperUtils.getAcls(Consts.ACL_DIGEST, "test", "test123", ZooDefs.Perms.ALL);
+		
+		ZkPool pool = ZkPoolFactory.getZkPool("node01:2181","test2","pwd","serviceId");
+		System.out.println("111111111");
+		ZkClient client = pool.getZkClient("node01:2181","test2","serviceId");
+		//client.createNode("/test5", acls, "", CreateMode.PERSISTENT);
+		
+		client.deleteNode("/test5");
+	}
 	
 }
