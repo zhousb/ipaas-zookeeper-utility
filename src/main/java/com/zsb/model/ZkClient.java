@@ -219,4 +219,10 @@ public class ZkClient {
 	public InterProcessLock getInterProcessLock(String lockPath) {
 		return new InterProcessMutex(this.client, lockPath);
 	}
+	
+	public boolean isAlive(){
+		//todo
+		
+		return true;
+	}
 }
